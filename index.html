@@ -36,10 +36,51 @@
           // , force: 'ios' // Uncomment for platform emulation
       });
     </script>
-    <script>
+    <!-- <script>
       window.fcSettings = {
         token: "0e146758-22ee-4ab0-95ac-7f46ef0adc28",
         host: "https://wchat.freshchat.com"
+      };
+    </script>
+    <script src="https://wchat.freshchat.com/js/widget.js" async></script> -->
+    <script>
+      window.fcSettings = {
+        token: "e170ebbc-c32d-41d3-881a-78408035952a",
+        host: "https://wchat.freshchat.com",
+        externalId: "john.doe1987",             // user’s id unique to your system
+        onInit: function() {
+          window.fcWidget.on('widget:loaded', function() {
+            window.fcWidget.user.get().then(function(resp) {
+              var status = resp && resp.status,
+                  data = resp && resp.data;
+              if (status === 200) {
+                if (data.restoreId) {
+                                                // Update restoreId in your database
+                }
+              }
+            }, function(error) {                // User Not Created
+              window.fcWidget.user.setProperties({
+                firstName: "John",              // user’s first name
+                lastName: "Doe",                // user’s last name
+                email: "john.doe@gmail.com",    // user’s email address
+                phone: "8668323090",            // phone number without country code
+                phoneCountryCode: "+1",         // phone’s country code
+                plan: "Estate",                 // user's meta property 1
+                status: "Active",               // user's meta property 2
+                "Last Payment": "12th August"   // user's meta property 3
+              });
+              window.fcWidget.on('user:created', function(resp) {
+                var status = resp && resp.status,
+                    data = resp && resp.data;
+                if (status === 200) {
+                  if (data.restoreId) {
+                                                // Update restoreId in your database
+                  }
+                }
+              });
+            });
+          });
+        }
       };
     </script>
     <script src="https://wchat.freshchat.com/js/widget.js" async></script>
